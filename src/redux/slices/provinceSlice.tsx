@@ -5,13 +5,15 @@ import { useAppDispatch } from "../store";
 type Province = {
   province: [],
   district: [],
-  ward: []
+  ward: [],
+  fee: {}
 };
 
 const initialState: Province = {
     province: [],
     district: [],
-    ward: []
+    ward: [],
+    fee: {}
 
 };
 
@@ -28,7 +30,7 @@ export const getProvince  = createAsyncThunk("provinces/getprovinces", async () 
 export const getDistrict  = createAsyncThunk("provinces/getdistrict", async (id: number) => {
    
     const province = {
-        'province_id': parseInt(id)
+        'province_id': id
     }  
    
    const res = await fetch('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', {
@@ -47,7 +49,40 @@ export const getDistrict  = createAsyncThunk("provinces/getdistrict", async (id:
     
             
 })
-
+export const getWards  = createAsyncThunk("provinces/getwards", async (id: number) => {
+  const province = {
+      'district_id': id
+  }  
+  const res = await axios.post("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward", JSON.stringify(province),  {
+    headers: {
+            'Content-Type': 'application/json',
+            'token': '422b151b-4b63-11ed-8008-c673db1cbf27',
+          }, 
+  })
+  return res.data.data          
+})
+export const getCharge = createAsyncThunk("provinces/getcharge", async (address:any) => {
+            const info = {
+              ...address,
+              "coupon": null,
+              "service_id":53321,
+              "from_district_id": 3440,
+              "height":15,
+              "length":15,
+              "weight":1000,
+              "width":15
+            }
+            const res = await axios.post("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee", JSON.stringify(info), {
+              headers: {
+                'Content-Type': 'application/json',
+                'token': '422b151b-4b63-11ed-8008-c673db1cbf27',
+                'shop_id': 	3348656
+              }, 
+            })
+            console.log("res",res);
+            return res.data.data
+            
+})
 
 
 const provinceSlice = createSlice({
@@ -59,7 +94,13 @@ const provinceSlice = createSlice({
       state.province = payload as any;
     });
     builder.addCase(getDistrict.fulfilled, (state, { payload }) => {
-        state.district = payload as any;
+        state.district = payload as any;      
+      });
+      builder.addCase(getWards.fulfilled, (state, { payload }) => {
+        state.ward = payload as any;
+      });
+      builder.addCase(getCharge.fulfilled, (state, { payload }) => {
+        state.fee = payload as any;
         console.log("load", payload);
         
       });

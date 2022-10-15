@@ -5,7 +5,7 @@ import { formatCurrency } from '../../ultis'
 import {useForm, SubmitHandler} from 'react-hook-form'
 import { addCarts } from '../../redux/slices/cartSlice'
 import axios from 'axios'
-import { getDistrict, getProvince } from '../../redux/slices/provinceSlice'
+import { getCharge, getDistrict, getProvince, getWards } from '../../redux/slices/provinceSlice'
 
 
 
@@ -16,7 +16,11 @@ const CheckoutPage = (props: Props) => {
   const navigate = useNavigate()
   const carts = useSelector((state: any) => state.carts.carts)
   const province = useSelector((state: any) => state.province)
-  console.log("province", province);
+  const [Address,setAddress] = useState({
+     to_district_id: 0,
+      to_ward_code: 0,
+      insurance_value: 0
+  })
   useEffect(() => {
    dispatch(getProvince())
    
@@ -33,11 +37,24 @@ const CheckoutPage = (props: Props) => {
       dispatch(addCarts(products))
       navigate('/') 
   }
+
   const onProvince = async (e:any) => {
-          await dispatch(getDistrict(e.target.value))
-          console.log(e.target.value);
-          
+          await dispatch(getDistrict(parseInt(e.target.value)))
   }
+  const onDistrict = async (e:any) => {
+    await dispatch(getWards(parseInt(e.target.value)))
+    setAddress(old => ({...old, to_district_id: old.to_district_id = parseInt(e.target.value)}))
+    setAddress(old => ({...old, insurance_value: sum}))
+  }
+  const onWard = (e:any) => {
+        setAddress(old => ({...old, to_ward_code: old.to_ward_code = parseInt(e.target.value)}))
+        setTimeout( async () => {
+          await dispatch(getCharge(Address))  
+          console.log("fee", province);
+        }, 1);
+      
+  }
+  
   return (
     <div>
       <form onSubmit={handleSubmit(onAdd)}>
@@ -71,14 +88,17 @@ const CheckoutPage = (props: Props) => {
                   return <option key={index ++} value={item.ProvinceID}>{item.ProvinceName}</option>
                 })}
               </select>
-              <select className='py-[10px]' name="" id="">
+              <select onChange={(e) => onDistrict(e)} className='py-[10px]' name="" id="">
               <option value="0">Huyện </option>
                 {province?.district?.map((item:any, index:number) => {
                   return <option key={index ++} value={item.DistrictID}>{item.DistrictName} </option>
                 })}
               </select>
-              <select className='py-[10px]' name="" id="">
+              <select onChange={(e) => onWard(e)} className='py-[10px]' name="" id="">
                 <option value="">Xã</option>
+                {province?.ward?.map((item:any, index:number) => {
+                    return <option key={index ++} value={item.WardCode}>{item.WardName}</option>
+                })}
               </select>
           </table>
           
@@ -137,7 +157,7 @@ const CheckoutPage = (props: Props) => {
               </div>
               <div className=" pt-5 flex">
                 <span className="grow font-semibold">Chi phí vận chuyển</span>
-                <span className="text-right ">{formatCurrency(30000)}</span>
+                <span className="text-right ">{province.fee.total ? formatCurrency(province?.fee?.total) : "Chi phí vận chuyển sẽ được tính sau chọn nơi nhận hàng"}</span>
               </div>
               <div className=" pt-5 flex">
                 <span className="grow font-semibold">Tổng tiền</span>
