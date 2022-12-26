@@ -2,7 +2,8 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import ClientFooter from "./Footer";
 import ClientHeader from "./Header";
-
+interface TypeClick {
+}
 const ClientLayout = () => {
   return (
     <>

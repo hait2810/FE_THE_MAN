@@ -17,7 +17,7 @@ const initialState: ICatePostState = {
 };
 export const getAllCatePosts = createAsyncThunk("catepost/getall", async () => {
   const res = await getAlls();
-  return res.data;
+  return res;
 });
 export const addCatePost = createAsyncThunk(
   "catepost/create",
@@ -37,7 +37,7 @@ export const getCatePost = createAsyncThunk(
   "catepost/getCatePost",
   async (id: any) => {
     const res = await read(id);
-    return res.data;
+    return res;
   }
 );
 export const updateCatePost = createAsyncThunk(

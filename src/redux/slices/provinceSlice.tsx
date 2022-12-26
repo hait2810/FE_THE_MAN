@@ -121,4 +121,3 @@ const provinceSlice = createSlice({
 });
 
 export default provinceSlice.reducer;
-export const { setPage } = provinceSlice.actions;

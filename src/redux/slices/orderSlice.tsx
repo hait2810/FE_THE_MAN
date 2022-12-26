@@ -179,7 +179,7 @@ export const orderConfirm = createAsyncThunk(
         }
       );
       return res.data;
-    } catch (er) {
+    } catch (er:any) {
       toast.error(er?.response?.data.code_message_value)
       toast.error(er?.response?.data.message)
     } 

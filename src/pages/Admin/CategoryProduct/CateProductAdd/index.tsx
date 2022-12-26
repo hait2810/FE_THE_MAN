@@ -17,7 +17,7 @@ const CateProductAdd = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {register,handleSubmit,formState:{errors}}=useForm<Inputs>();
-  const onSubmit:SubmitHandler<Inputs>=async(values:Inputs)=>{
+  const onSubmit:SubmitHandler<Inputs>=async(values:any)=>{
     try {
       const apiUrl = "https://api.cloudinary.com/v1_1/dmlv9tzte/image/upload";
       const images = values.image[0];

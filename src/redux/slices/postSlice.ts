@@ -6,7 +6,6 @@ import {
   filter,
   get,
   getAll,
-  getAllPost,
   remove,
   update,
 } from "../../api-cilent/Post";
@@ -42,18 +41,17 @@ export const getPosts = createAsyncThunk(
   "posts/getPosts",
   async (data: any) => {
     const response = await getAll(data.page, data.limit);
-    return response.data;
+    return response;
   }
 );
 export const getAllCatePosts = createAsyncThunk("catepost/getall", async () => {
   const res = await getAlls();
-  return res.data;
+  return res;
 });
 export const deletePosts = createAsyncThunk(
   "posts/deletePosts",
   async (_id: string) => {
     const datas = await remove(_id);
-    console.log(datas);
     return _id;
   }
 );
@@ -68,7 +66,7 @@ export const addPosts = createAsyncThunk(
 
 export const getPost = createAsyncThunk("posts/getPost", async (id: any) => {
   const res = await get(id);
-  return res.data;
+  return res?.data;
 });
 export const filter_post = createAsyncThunk(
   "posts/filter_post",

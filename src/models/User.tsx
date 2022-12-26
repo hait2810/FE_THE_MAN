@@ -4,10 +4,10 @@ export type User = {
   Inputs?: any;
   _id?: number | string;
   fullname?: string;
-  email: string;
+  email?: string;
   password?: string;
   img?: string;
   phone?: string;
   role?: number;
-  status?: string;
+  status: "active" | "block"
 };

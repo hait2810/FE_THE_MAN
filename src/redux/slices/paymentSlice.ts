@@ -34,5 +34,3 @@ const PaymentSlice = createSlice({
 });
 
 export default PaymentSlice.reducer;
-
-export const { setPage } = PaymentSlice.actions;

@@ -33,7 +33,10 @@ const initialState: ProductsState = {
   },
   page: 1,
   limit: 10,
-  product: {},
+  product: {
+    desc: "",
+    status: "ACTIVE"
+  },
   loading: false,
 };
 
@@ -41,37 +44,32 @@ export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (data: any) => {
     const response = await getAll(data.page, data.limit);
-    return response.data;
+    return response?.data?.products;
   }
 );
 export const getProductadmins = createAsyncThunk(
   "products/getProductadmins",
   async (data: any) => {
     const response = await getAllproduct(data.page, data.limit);
-    return response.data;
+    return response;
   }
 );
 export const thongkes = createAsyncThunk(
   "products/thongke",
   async (data: any) => {
     const response = await thongke(data);
-    console.log(response);
-
-    return response.data;
+    return response;
   }
 );
 export const search = createAsyncThunk("products/filter", async (data: any) => {
   const response = await searchs(data);
-  console.log(response);
-
-  return response.data;
+  return response;
 });
 
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (_id: any) => {
     const data = await remove(_id);
-    console.log(data);
     return _id;
   }
 );
@@ -125,9 +123,7 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getProducts.fulfilled, (state, { payload }) => {
-      console.log("payload", payload);
-
-      state.products.Product = payload.products as any;
+      state.products.Product = payload as any;
     });
     builder.addCase(getProductadmins.fulfilled, (state, { payload }) => {
       console.log("payload", payload);

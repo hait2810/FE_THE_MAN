@@ -27,7 +27,7 @@ type Inputs = {
 };
 
 const Comment = (props: Props) => {
-  const [dataComment, setDatacomment] = useState([]);
+  const [dataComment, setDatacomment] = useState<any>([]);
   const { id } = useParams();
   // console.log(dataComment);
   const [checkId, setCheckid] = useState("");
@@ -78,11 +78,13 @@ const Comment = (props: Props) => {
     reset,
   } = useForm<Inputs>();
   useEffect(() => {
-    (async () => {
-      const { data } = await getComment(id);
-      setDatacomment(data);
-    })();
-  }, [dataComment.length]);
+    if (id) {
+      (async () => {
+        const { data } = await getComment(id);
+        setDatacomment(data);
+      })();
+    }
+  }, [dataComment.length, id]);
 
   const Sendcomment: SubmitHandler<Inputs> = async (datas: Inputs) => {
     reset();
@@ -109,7 +111,7 @@ const Comment = (props: Props) => {
       if (result.isConfirmed) {
         await removeComemnt(id);
         Swal.fire("Thành công!", "Xóa thành công.", "success");
-        setDatacomment(dataComment.filter((item) => item._id != id));
+        setDatacomment(dataComment.filter((item:any) => item._id != id));
       }
     });
   };
@@ -146,7 +148,7 @@ const Comment = (props: Props) => {
                 <textarea
                   id=""
                   {...register("content", {
-                    required: "Vui lòng nhập tên bài viết",
+                    required: "Vui lòng nhập nội dung",
                   })}
                   cols={30}
                   placeholder="Mời bạn để lại bình luận..."
@@ -162,7 +164,7 @@ const Comment = (props: Props) => {
           : ""}
         <div className="list-comments_wrapper">
           <div className="comments_wrapper">
-            {dataComment?.map((e: any, index) => {
+            {dataComment?.map((e: any, index:number) => {
               var date1 = moment();
               var date2 = moment(e.createdAt);
               var diffYear = date1.diff(date2, "year");
@@ -216,9 +218,9 @@ const Comment = (props: Props) => {
                         id="w3review"
                         name="w3review"
                         className="area_content w-10/12"
-                        onKeyPress={(element) => {
+                        onKeyPress={(element: any) => {
                           if (element.which === 13) {
-                            if (element.target?.value) {
+                            if (element?.target?.value) {
                               edit(element?.target?.value);
                             } else {
                               handleremove(e?.id);

@@ -24,7 +24,8 @@ type Inputs = {
 const SliderEdit = () => {
   const [preview, setPreview] = useState<string>();
   const dispatch = useAppDispatch();
-  const slide = useSelector((state: RootState) => state?.slider?.Slider);
+  const slide = useSelector((state: any) => state?.slider?.Slider);
+  
   console.log("slider", slide);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -37,11 +38,13 @@ const SliderEdit = () => {
 
   useEffect(() => {
     (async () => {
-      const posts = await dispatch(getSlider(id));
-      reset(posts.payload);
+    await dispatch(getSlider(id));
+     
     })();
   }, [id, dispatch, reset]);
-
+  useEffect(() => {
+    reset(slide);
+  }, [slide])
   const onSubmit: SubmitHandler<Inputs> = async (values: Inputs) => {
     try {
       const apiUrl = "https://api.cloudinary.com/v1_1/dmlv9tzte/image/upload";

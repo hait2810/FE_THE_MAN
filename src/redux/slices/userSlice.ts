@@ -23,7 +23,9 @@ const initialState: UsersState = {
   },
   page: 1,
   limit: 10,
-  User: {},
+  User: {
+    status:"active"
+  },
   usera: {},
 };
 
@@ -31,7 +33,7 @@ export const getUsers = createAsyncThunk(
   "Users/getUsers",
   async (data: any) => {
     const response = await getAll(data.page, data.limit);
-    return response.data;
+    return response;
   }
 );
 export const filter_user = createAsyncThunk(

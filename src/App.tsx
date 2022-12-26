@@ -55,11 +55,12 @@ import VoucherManager from "./pages/Admin/Voucher";
 import VoucherAdd from "./pages/Admin/Voucher/Add";
 import VoucherEdit from "./pages/Admin/Voucher/Edit";
 import CommetManager from "./pages/Admin/Comment/ComentManager";
-function App() {
+import { useState } from "react";
+function App() { 
   return (
     <>
       <Routes>
-        <Route path="/" element={<ClientLayout />}>
+        <Route path="/" element={<ClientLayout  />}>
           <Route index element={<HomePage />} />
           <Route
             path="/cart"
@@ -130,7 +131,7 @@ function App() {
             path="/detail/:id"
             element={
               <ScrollIntoView>
-                <DetailProduct />
+                <DetailProduct/>
               </ScrollIntoView>
             }
           />

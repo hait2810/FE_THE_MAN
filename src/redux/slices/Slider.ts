@@ -28,7 +28,7 @@ export const getSliders = createAsyncThunk(
   "Sliders/getSliders",
   async (data: any) => {
     const response = await getAll(data.page, data.limit);
-    return response.data;
+    return response;
   }
 );
 
@@ -36,7 +36,6 @@ export const deleteSlider = createAsyncThunk(
   "Sliders/deleteSlider",
   async (_id: any) => {
     const data = await remove(_id);
-    console.log(data);
     return _id;
   }
 );
@@ -53,7 +52,7 @@ export const getSlider = createAsyncThunk(
   "Sliders/getSlider",
   async (id: any) => {
     const res = await get(id);
-    return res.data;
+    return res;
   }
 );
 

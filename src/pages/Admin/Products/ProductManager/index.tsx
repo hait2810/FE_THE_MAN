@@ -27,6 +27,7 @@ import { Pagination } from "antd";
 import "../../Dashboard/dashboard.css";
 import "../../../OrderStatus/Cancel/index.css";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Product } from "../../../../models/Product";
 type Props = {};
 type Inputs = {
   name: String;
@@ -36,6 +37,8 @@ type Inputs = {
 
 const ProductManager = (props: Props) => {
   const product = useSelector((state: RootState) => state?.product);
+  console.log("product", product);
+
   const pages = useSelector((state: RootState) => state?.product.page);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -73,8 +76,6 @@ const ProductManager = (props: Props) => {
       })
     );
   };
-
-  console.log(product?.products);
 
   return (
     <div className={styles.content}>
@@ -157,7 +158,7 @@ const ProductManager = (props: Props) => {
               </tr>
             </thead>
             <tbody>
-              {product?.products?.products?.map((item: any, index: any) => {
+              {product?.products?.products?.map((item:Product, index: any) => {
                 return (
                   <tr key={item._id}>
                     <td>{(pages - 1) * 10 + ++index}</td>
@@ -174,14 +175,14 @@ const ProductManager = (props: Props) => {
                     <td>{item.price}đ</td>
                     <td>
                       <div className="h-[150px] w-[250px] overflow-x-auto scoll">
-                        {item.desc.length > 90
+                        {item?.desc?.length > 90
                           ? `${item?.desc?.slice(0, 90)}...`
                           : item?.desc}
                       </div>
                     </td>
                     <td className="text-center">
-                      <div className={`${statusObj[item?.status]} text-center`}>
-                        {item?.status == "ACTIVE"
+                      <div className={`${statusObj[item.status]} text-center`}>
+                        {item.status == "ACTIVE"
                           ? "Đang hoạt động"
                           : "Ngừng hoạt động"}
                       </div>

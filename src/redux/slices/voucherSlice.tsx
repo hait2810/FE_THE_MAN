@@ -6,7 +6,7 @@ import { addVoucherApi, checkVoucherApi, getVoucherApi, getVouchersApi, removeVo
 type Ivoucher = {
       voucher: {},
       vouchera: {},
-      vouchers: [],
+      vouchers: any[],
 
 };
 
@@ -20,7 +20,7 @@ const initialState: Ivoucher = {
 
 
 export const GETVoucherX = createAsyncThunk("voucher/getvoucherx", async (data:any) => {
-    let response = {}
+    let response = {} as any
     if(data._id) {
       const res = await checkVoucherApi(data)
     if(res?.data?.code == 404) {
@@ -49,7 +49,7 @@ export const GETVoucherX = createAsyncThunk("voucher/getvoucherx", async (data:a
 })
 
 export const checkVoucher = createAsyncThunk("voucher/checkvoucher", async (data:any) => {
-    let response = {}
+    let response = {} as any
     
       const res = await checkVoucherApi(data)
     if(res?.data?.code == 404) {
@@ -109,7 +109,7 @@ const voucherSlice = createSlice({
   reducers: { },
   extraReducers: (builder) => {
     builder.addCase(checkVoucher.fulfilled, (state, { payload }) => { 
-          if(payload?.code == 200){
+          if(payload?.code  == 200){
             state.voucher = payload
           }
           
@@ -154,5 +154,3 @@ builder.addCase(getVoucher.fulfilled, (state,{payload}) => {
 });
 
 export default voucherSlice.reducer;
-
-export const { setPage } = voucherSlice.actions;

@@ -1,13 +1,15 @@
 import { ICatePro } from "../models/CatePro";
 import instance from "./Config";
 
-export const getAllCateProduct = (): Promise<ICatePro[]> => {
+export const getAllCateProduct = async (): Promise<ICatePro[]> => {
   const url = "/cateproduct";
-  return instance.get(url);
+   const response = await instance.get(url);
+   return response.data as ICatePro[]
 };
-export const getAllCateProductadmin = (): Promise<ICatePro[]> => {
+export const getAllCateProductadmin = async (): Promise<ICatePro[]> => {
   const url = "/cateproducts";
-  return instance.get(url);
+  const response = await instance.get(url);
+  return response.data as ICatePro[]
 };
 export const readCateProduct = (id: string): Promise<ICatePro> => {
   const url = `/cateproduct/${id}`;

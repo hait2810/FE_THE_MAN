@@ -4,6 +4,7 @@ import { TiPlus } from "react-icons/ti";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { ICatePro } from "../../../../models/CatePro";
 import {
   deleteCatePro,
   getCateadmin,
@@ -17,10 +18,8 @@ type Props = {};
 const CategoryProductManager = (props: Props) => {
   const catePro = useSelector((state: RootState) => state.catePro);
   const statusObj = {
-    ACTIVE:
-      "text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded-full",
-    DEACTIVE:
-      "text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded-full",
+    ACTIVE: "bg-green-500",
+    DEACTIVE: "bg-red-600",
   };
 
   const dispatch = useAppDispatch();
@@ -72,7 +71,7 @@ const CategoryProductManager = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {catePro?.cateproducts?.map((item: any, index: number) => {
+            {catePro?.cateproducts?.map((item: ICatePro, index: number) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -86,8 +85,12 @@ const CategoryProductManager = (props: Props) => {
                     />
                   </td>
                   <td className="text-center">
-                    <div className={`${statusObj[item?.status]} text-center`}>
-                      {item?.status == "ACTIVE"
+                    <div
+                      className={`${
+                        statusObj[item.status]
+                      } text-xs text-white rounded-full inline-block py-1 px-2.5 leading-none whitespace-nowrap align-baseline font-bold  text-center`}
+                    >
+                      {item.status == "ACTIVE"
                         ? "Đang hoạt động"
                         : "Ngừng hoạt động"}
                     </div>

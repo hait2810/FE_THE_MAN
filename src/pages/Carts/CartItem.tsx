@@ -19,7 +19,7 @@ interface CartItemProps {
 export default function CartItem(props: CartItemProps) {
   const { item, id } = props;
   const dispatch = useDispatch<any>();
-  const [inputValue, setInputValue] = useState<Number>();
+  const [inputValue, setInputValue] = useState<number>();
   const [isDisabled, setDisabled] = useState(false);
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function CartItem(props: CartItemProps) {
             onBlur={(e) => onBlurQuantity(item, e)}
             type="number"
             defaultValue={item.quantity}
-            value={parseInt(inputValue)}
+            value={inputValue}
             onChange={(e) => setInputValue(parseInt(e.target.value))}
             //   onChange={(e) => onChangeQuantity(item, e)}
             className={clsx(

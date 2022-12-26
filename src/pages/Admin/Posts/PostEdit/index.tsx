@@ -27,8 +27,8 @@ const PostEdit = () => {
   const [preview, setPreview] = useState<string>();
   const dispatch = useAppDispatch();
   const post = useSelector((state: RootState) => state?.post?.catePost);
-const postcate = useSelector((state:RootState)=>state?.post?.post)
-console.log("Catepost", postcate)
+const postcate = useSelector((state:any)=>state?.post?.post)
+
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllCatePosts());
@@ -70,10 +70,13 @@ console.log("Catepost", postcate)
 
   useEffect(() => {
     (async () => {
-      const posts = await dispatch(getPost(id));
-      reset(posts.payload);
+    await dispatch(getPost(id));
+      
     })();
   }, [id, dispatch, reset]);
+  useEffect(() => {
+    reset(postcate);
+  }, [postcate])
   return (
     <div>
       <div>
@@ -219,7 +222,7 @@ console.log("Catepost", postcate)
                     <label className="block text-sm font-medium text-gray-700">
                       Hình ảnh hiện tại
                     </label>
-                    <img className='w-32' src={preview ? preview : postcate.image} alt="" />
+                    <img className='w-32' src={preview ? preview : postcate?.image} alt="" />
                     </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">

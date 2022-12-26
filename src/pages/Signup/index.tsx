@@ -20,7 +20,7 @@ const SignUp = (props: Props) => {
   } = useForm<Inputs>();
 
 
-  const onSubmit: SubmitHandler<Inputs> = async (values: Inputs) => {
+  const onSubmit: SubmitHandler<Inputs> = async (values: any) => {
     try {
       await signup(values);
 

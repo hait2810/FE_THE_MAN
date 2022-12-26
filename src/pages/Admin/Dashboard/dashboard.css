@@ -1,8 +1,9 @@
 .center {
   margin: auto;
   margin-right: 200px;
+  height: 20%;
 }
-main {
+.main {
   min-height: 0px !important;
   padding: 10px 10px !important;
 }

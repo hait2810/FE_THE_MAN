@@ -31,7 +31,7 @@ type Props = {};
 const ContactManager = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const contactList = useSelector((state: RootState) => state.contact.contacts);
-  const contact = useSelector((state: RootState) => state.contact.contact);
+  const contact = useSelector((state: any) => state.contact?.contact);
   // console.log(contact);
 
   const dispatch = useDispatch<any>();
@@ -150,19 +150,19 @@ const ContactManager = () => {
                     </h1>
                     <div className="group mt-5 flex items-center gap-3">
                       <AiOutlineUser className="text-xl" />
-                      <span>{contact.fullName}</span>
+                      <span>{contact?.fullName}</span>
                     </div>
                     <div className="group mt-5 flex items-center gap-3">
                       <AiOutlineMail className="text-xl" />
-                      <span>{contact.email}</span>
+                      <span>{contact?.email}</span>
                     </div>
                     <div className="group mt-5 flex items-center gap-3">
                       <AiOutlinePhone className="rotate-90 text-xl" />
-                      <span>{contact.phoneNumber}</span>
+                      <span>{contact?.phoneNumber}</span>
                     </div>
                     <div className="group mt-5 flex items-center gap-3">
                       <AiOutlineHome className="text-xl" />
-                      <span>{contact.address}</span>
+                      <span>{contact?.address}</span>
                     </div>
                     <div className="group mt-5 flex flex-col gap-3">
                       <AiOutlineMessage className="text-xl" />

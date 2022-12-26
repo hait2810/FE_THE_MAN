@@ -17,7 +17,8 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-type Props = {};
+type Props = {
+};
 
 type TypeColorSize = Map<
   string,
@@ -29,7 +30,7 @@ type TypeColorSize = Map<
   }
 >;
 
-const DetailProduct = (props: Props) => {
+const DetailProduct = () => {
   const [show, isShow] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const DetailProduct = (props: Props) => {
   };
   const onAddOrder: SubmitHandler<any> = async (data: any) => {
     if (users?.isLogged == false) {
+      localStorage.setItem("link", JSON.stringify("/detail/"+id))
       setTimeout(() => {
         navigate("/signin");
       }, 2000);

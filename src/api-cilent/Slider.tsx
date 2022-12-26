@@ -1,7 +1,8 @@
 import { Slider } from "../models/Slider";
 import instance from "./Config";
-export const getAll = (page: any, limit: any): Promise<Slider[]> => {
-  return instance.post("/sliders", { page, limit });
+export const getAll = async (page: any, limit: any): Promise<Slider[]> => {
+  const response = await instance.post("/sliders", { page, limit });
+  return response.data as Slider[]
 };
 export const getAllPost = (): Promise<Slider[]> => {
   return instance.get("/slider");
@@ -14,8 +15,9 @@ export const add = (slider: Slider): Promise<Slider> => {
   return instance.post("/slider", slider);
 };
 
-export const get = (id: string): Promise<Slider> => {
-  return instance.get(`/slider/${id}`);
+export const get = async (id: string): Promise<Slider> => {
+  const response = await instance.get(`/slider/${id}`);
+  return response.data as Slider
 };
 
 export const update = (slider: Slider): Promise<Slider> => {

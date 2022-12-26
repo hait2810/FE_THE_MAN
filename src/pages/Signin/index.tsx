@@ -22,10 +22,9 @@ const Signin = (props: Props) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (values: Inputs) => {
+  const onSubmit: SubmitHandler<Inputs> = async (values: any) => {
     try {
       const user = await signin(values);
-      console.log(values);
 
       toast.success("Đăng nhập thành công !", {
         position: "top-right",
@@ -37,13 +36,24 @@ const Signin = (props: Props) => {
         progress: undefined,
       });
       dispatch(signinAction(user));
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } catch (error: any) {
-      console.log(error);
 
-      const isVerify = error?.response.data.verified;
+      const role = user.data.users.role;
+      if (role == 1) {
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 1000);
+      } else {
+        // const link = JSON.parse(localStorage.getItem("link") as string);
+        // if (link) {
+        //   navigate(link);
+        //   localStorage.removeItem("link");
+        // } else {
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+    } catch (error: any) {
+      const isVerify = error?.response?.data?.verified;
       if (isVerify === false && isVerify !== undefined) {
         Swal.fire({
           icon: "error",
@@ -51,7 +61,7 @@ const Signin = (props: Props) => {
           text: "Vui lòng kiểm tra email để xác thực tài khoản!",
         });
       }
-      const message = error?.response.data.message;
+      const message = error?.response?.data?.message;
       toast.error(message, {
         position: "top-right",
         autoClose: 5000,
@@ -98,8 +108,7 @@ const Signin = (props: Props) => {
                         {...register("email", {
                           required: "Vui lòng nhập email",
                           pattern: {
-                            value:
-                              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                             message: "Vui lòng nhập đúng định dạng email",
                           },
                         })}

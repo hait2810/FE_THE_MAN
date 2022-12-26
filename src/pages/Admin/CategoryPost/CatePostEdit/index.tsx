@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { HiOutlineCheck, HiOutlineX, HiRefresh } from 'react-icons/hi'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getCatePost, updateCatePost } from '../../../../redux/slices/catePostSlice'
@@ -16,7 +16,7 @@ const CatePostEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const {register,handleSubmit,formState:{errors}, reset}=useForm<Inputs>();
-  
+  const categorypost = useSelector((state:any) => state?.catepost?.catepost?.Post)
   const onSubmit:SubmitHandler<Inputs>=async(values:Inputs)=>{
     try {
       await dispatch(updateCatePost({...values})).unwrap();
@@ -35,9 +35,11 @@ const CatePostEdit = () => {
   useEffect(() => {
     (async () => {
       const catepost = await dispatch(getCatePost(id));
-      reset(catepost.payload.Post);
     })();
   }, [id, dispatch, reset]);
+  useEffect(() => {
+    reset(categorypost)
+  }, [categorypost])
   return (
     <div>
       <div>

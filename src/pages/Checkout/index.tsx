@@ -28,6 +28,7 @@ const CheckoutPage = (props: Props) => {
   const [total, setTotal] = useState(0);
   const [fee, setFee] = useState<number>(0);
   const [Payment, setPayment] = useState<Number>(0);
+
   const [Checked, setChecked] = useState(false);
   let sum = 0;
   let sumwidth = 0;
@@ -129,7 +130,7 @@ const CheckoutPage = (props: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const onAdd: SubmitHandler<any> = async (data: any) => {
     if (provicei.to_district_id == 0 && provicei?.to_ward_code == 0) {
       return toast.info("Vui lòng chọn địa chỉ giao hàng");
@@ -241,6 +242,8 @@ const CheckoutPage = (props: Props) => {
       update: false,
     };
     const res = await dispatch(checkVoucher(data));
+    console.log("res", res?.payload);
+
     if (res?.payload?.code == 200) {
       if (res?.payload?.amount > 0) {
         toast.success(
@@ -272,7 +275,7 @@ const CheckoutPage = (props: Props) => {
   };
 
   const onDistrict = async (e: any) => {
-    const districtId = parseInt(e.target.value)
+    const districtId = parseInt(e.target.value);
     setProvicei((old) => ({
       ...old,
       to_district_id: districtId,
@@ -310,7 +313,11 @@ const CheckoutPage = (props: Props) => {
                 {...register("fullname", { required: true })}
               />
 
-              {errors?.fullname && <span className="ml-[5px] font-bold text-red-500">Không được để trống </span>}
+              {errors?.fullname && (
+                <span className="ml-[5px] font-bold text-red-500">
+                  Không được để trống{" "}
+                </span>
+              )}
             </table>
             <table className="table-auto w-full ">
               <label htmlFor="" className="font-semibold">
@@ -323,7 +330,11 @@ const CheckoutPage = (props: Props) => {
                 placeholder="Địa chỉ cụ thể"
                 {...register("address", { required: true })}
               />
-              {errors?.address && <span className="ml-[5px] font-bold text-red-500">Không được để trống </span>}
+              {errors?.address && (
+                <span className="ml-[5px] font-bold text-red-500">
+                  Không được để trống{" "}
+                </span>
+              )}
             </table>
             <table className="table-auto w-full flex pb-[20px]">
               <select
@@ -384,9 +395,16 @@ const CheckoutPage = (props: Props) => {
                 className="border w-8/12 py-3 px-2  mt-5 mb-5"
                 type="text"
                 placeholder="Số Điện Thoại"
-                {...register("phonenumber", {required: true,  pattern: /((09|03|07|08|05|\+84)+([0-9]{8,9})\b)/g})}
+                {...register("phonenumber", {
+                  required: true,
+                  pattern: /((09|03|07|08|05|\+84)+([0-9]{8,9})\b)/g,
+                })}
               />
-              {errors?.phonenumber && <span className="ml-[5px] font-bold text-red-500">Vui lòng nhập đúng định dạng sđt </span>}
+              {errors?.phonenumber && (
+                <span className="ml-[5px] font-bold text-red-500">
+                  Vui lòng nhập đúng định dạng sđt{" "}
+                </span>
+              )}
             </table>
             <table className="table-auto w-full ">
               <label htmlFor="" className="font-semibold">
@@ -397,9 +415,17 @@ const CheckoutPage = (props: Props) => {
                 className="border w-8/12 py-3 px-2 mt-5 mb-5"
                 type="text"
                 placeholder="Email"
-                {...register("email", {required:true, pattern: /^[a-zA-Z0-9?:\.?:\_]+@[a-zA-Z0-9-]+\.+([a-zA-Z]{2,5})$/})}
+                {...register("email", {
+                  required: true,
+                  pattern:
+                    /^[a-zA-Z0-9?:\.?:\_]+@[a-zA-Z0-9-]+\.+([a-zA-Z]{2,5})$/,
+                })}
               />
-              {errors?.email && <span className="ml-[5px] font-bold text-red-500">Vui lòng viết đúng định dạng email</span>}
+              {errors?.email && (
+                <span className="ml-[5px] font-bold text-red-500">
+                  Vui lòng viết đúng định dạng email
+                </span>
+              )}
             </table>
             <table className="table-auto w-full ">
               <label htmlFor="" className="font-semibold">

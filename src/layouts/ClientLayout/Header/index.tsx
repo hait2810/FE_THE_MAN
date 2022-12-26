@@ -17,7 +17,8 @@ import {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { search } from "../../../redux/slices/productSlice";
 import Voucher from "../../../components/Voucher";
-type Props = {};
+type Props = {
+};
 type Inputs = {
   name: String;
 };
@@ -56,6 +57,7 @@ const ClientHeader = (props: Props) => {
       if (currentUser?.users?.id) {
         await dispatch(readCart(currentUser?.users?.id));
       }
+      
     })();
   }, [dispatch]);
 

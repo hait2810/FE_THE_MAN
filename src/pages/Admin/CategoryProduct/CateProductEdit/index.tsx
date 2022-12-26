@@ -28,7 +28,7 @@ const CateProductEdit = () => {
     formState: { errors },
     reset,
   } = useForm<Inputs>();
-const categoryproduct= useSelector((state:any)=>state.catePro?.cateproduct?.data?.Cateproduct)
+const categoryproduct = useSelector((state:any)=>state.catePro?.cateproduct?.data?.Cateproduct)
   const onSubmit: SubmitHandler<Inputs> = async (values: Inputs) => {
     try {
       const apiUrl = "https://api.cloudinary.com/v1_1/dmlv9tzte/image/upload";
@@ -56,11 +56,13 @@ const categoryproduct= useSelector((state:any)=>state.catePro?.cateproduct?.data
   };
   useEffect(() => {
     (async () => {
-      const catePro = await dispatch(readCatePro(id));
-      console.log(catePro);
-      reset(catePro.payload.data.Cateproduct);
+    await dispatch(readCatePro(id));
+     
     })();
   }, [id, dispatch, reset]);
+  useEffect(() => {
+    reset(categoryproduct);
+  }, [categoryproduct])
   return (
     <div>
       <div>

@@ -1,8 +1,9 @@
 import { User } from "../models/User";
 import instance from "./Config";
 
-export const getAll = (page: any, limit: any): Promise<User[]> => {
-  return instance.post("users", { page, limit });
+export const getAll = async (page: any, limit: any): Promise<User[]> => {
+   const response = await instance.post("users", { page, limit });
+   return response.data as User[]
 };
 export const get = (id: string): Promise<User> => {
   return instance.get(`user/${id}`);
@@ -12,7 +13,7 @@ export const update = (User: User): Promise<User> => {
   return instance.put(`/user/${User._id}`, User);
 };
 
-export const getComment = (id: User): Promise<User> => {
+export const getComment = (id: any): Promise<User> => {
   return instance.get(`/comment/getByProduct/${id}`);
 };
 export const removeComemnt = (id: any): Promise<any> => {

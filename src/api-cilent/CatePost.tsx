@@ -1,13 +1,16 @@
 import instance from "./Config";
 import { ICatePost } from "../models/CatePost";
-export const getAlls = (): Promise<ICatePost[]> => {
+
+export const getAlls = async (): Promise<ICatePost[]> => {
   const url = "/catepost";
-  return instance.get(url);
+  const response = await instance.get(url);
+  return response.data as ICatePost[];
 };
 
-export const read = (id: string): Promise<ICatePost> => {
+export const read = async (id: string): Promise<ICatePost> => {
   const url = `/catepost/${id}`;
-  return instance.get(url);
+  const response = await instance.get(url);
+  return response.data as ICatePost
 };
 
 export const createCatePost = (catepost: ICatePost): Promise<ICatePost> => {

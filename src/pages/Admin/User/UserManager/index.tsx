@@ -19,6 +19,7 @@ import {
   setPage,
 } from "../../../../redux/slices/userSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { User } from "../../../../models/User";
 
 type Props = {};
 type Inputs = {
@@ -27,12 +28,10 @@ type Inputs = {
 };
 
 const UserManager = (props: Props) => {
-  const user = useSelector((state: RootState) => state?.user);
+  const user = useSelector((state: any) => state?.user);
   const statusObj = {
-    active:
-      "text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded-full",
-    block:
-      "text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded-full",
+    active: "bg-green-500",
+    block: "bg-red-600",
   };
 
   const pages = useSelector((state: RootState) => state?.user.page);
@@ -115,7 +114,7 @@ const UserManager = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {user?.Users.users?.map((e: any, index: any) => {
+            {user?.Users?.users?.map((e: User, index: any) => {
               return (
                 <tr key={index}>
                   <td>{(pages - 1) * 10 + ++index}</td>
@@ -131,7 +130,11 @@ const UserManager = (props: Props) => {
                   </td> */}
                   <td className="w-16 ">{e.email}</td>
                   <td className="flex justify-center">
-                    <div className={`${statusObj[e.status]} text-center`}>
+                  <div
+                      className={`${
+                        statusObj[e.status]
+                      } text-xs text-white rounded-full inline-block py-1 px-2.5 leading-none whitespace-nowrap align-baseline font-bold  text-center`}
+                    >
                       {e.status}
                     </div>
                   </td>

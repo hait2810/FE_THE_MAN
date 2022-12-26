@@ -22,14 +22,14 @@ const initialState: ICateProState = {
 export const getCatePro = createAsyncThunk("catepro/getAll", async () => {
   const res = await getAllCateProduct();
 
-  return res.data;
+  return res;
 });
 export const getCateadmin = createAsyncThunk(
   "catepro/getALLadmin",
   async () => {
     const res = await getAllCateProductadmin();
 
-    return res.data;
+    return res;
   }
 );
 export const readCatePro = createAsyncThunk("catepro/read", async (id: any) => {
